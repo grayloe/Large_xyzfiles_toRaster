@@ -5,7 +5,7 @@ and in a x,y,z column text format, they were not readily accecssable to the DBCA
 
 Graham Loewenthal produces a series of scripts that would process the asc files into rasters.
 
-The series of scripts is:
+The series of scripts is:\n
 Function_1_PartitionCSV_Into_Smaller_CSV_Dask.py
 
 Function_2_CSV_To_Vector_To_Raster_version2_beta.py
