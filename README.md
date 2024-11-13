@@ -26,3 +26,10 @@ c) Each partition is provided as a column header and written as a csv file
 Function_2_CSV_To_Vector_To_Raster_version2_beta.py
 
 a) Reads the csv file and converts it into a raster file. Neatly access official EPSG string from datset's crs and applies to pathname, and reprojects as needed
+
+Function_3_Merge_Raster_Subsets_gdal.txt
+
+a) Converts all teh partitions tiff files into a gdal virtual .vrt file.
+
+b) Converts the vrt file to a tif file. using configurations to access more memory for the processing
+
