@@ -8,10 +8,15 @@ Graham Loewenthal produces a series of scripts that would process the asc files 
 Function_1_PartitionCSV_Into_Smaller_CSV_Dask.py
 
 using dask and pandas
+
 The asc file is read in in partitions.
+
 Each partitino is provided as a column header and written as a csv file
+
 
 The series of scripts is:
 Function_1_PartitionCSV_Into_Smaller_CSV_Dask.py
+
 Function_2_CSV_To_Vector_To_Raster_version2_beta.py
+
 Function_3_Merge_Raster_Subsets_gdal.txt (gdasl commands lines not PYthon script)
