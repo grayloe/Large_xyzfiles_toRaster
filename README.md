@@ -33,5 +33,8 @@ a) Reads the csv file and converts it into a raster file. Neatly access official
 a) Converts all teh partitions tiff files into a gdal virtual .vrt file.
 
 b) Converts the vrt file to a tif file. using configurations to access more memory for the processing
+
 4) ClipRasterByVectorTile_20241113_working.py (still await feedback as to know if this product is suitable)
+
 a) Loops through rows of polygons (tiles) each one clipping the raster, and writting out that clipped extent
+
