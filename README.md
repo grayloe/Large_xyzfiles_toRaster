@@ -7,15 +7,16 @@ Graham Loewenthal produces a series of scripts that would process the asc files 
 
 The series of scripts is:
 
-Function_1_PartitionCSV_Into_Smaller_CSV_Dask.py
+1) Function_1_PartitionCSV_Into_Smaller_CSV_Dask.py
 
-Function_2_CSV_To_Vector_To_Raster_version2_beta.py
+2) Function_2_CSV_To_Vector_To_Raster_version2_beta.py
 
-Function_3_Merge_Raster_Subsets_gdal.txt (gdasl commands lines not PYthon script)
+3) Function_3_Merge_Raster_Subsets_gdal.txt (gdasl commands lines not PYthon script)
 
-ClipRasterByVectorTile_20241113_working.py (still await feedback as to know if this product is suitable)
+4) ClipRasterByVectorTile_20241113_working.py (still await feedback as to know if this product is suitable)
 
-Function_1_PartitionCSV_Into_Smaller_CSV_Dask.py
+
+1) Function_1_PartitionCSV_Into_Smaller_CSV_Dask.py
 
 a) using dask and pandas
 
@@ -23,13 +24,15 @@ b) The asc file is read in in partitions.
 
 c) Each partition is provided as a column header and written as a csv file
 
-Function_2_CSV_To_Vector_To_Raster_version2_beta.py
+2) Function_2_CSV_To_Vector_To_Raster_version2_beta.py
 
 a) Reads the csv file and converts it into a raster file. Neatly access official EPSG string from datset's crs and applies to pathname, and reprojects as needed
 
-Function_3_Merge_Raster_Subsets_gdal.txt
+3) Function_3_Merge_Raster_Subsets_gdal.txt
 
 a) Converts all teh partitions tiff files into a gdal virtual .vrt file.
 
 b) Converts the vrt file to a tif file. using configurations to access more memory for the processing
+
+4) ClipRasterByVectorTile_20241113_working.py (still await feedback as to know if this product is suitable)
 
