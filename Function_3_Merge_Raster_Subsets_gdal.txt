@@ -1,0 +1,95 @@
+This file: E:\DWER_LIDAR\Tools\Function_3_Merge_Raster_Subsets_gdal.txt
+
+###################################################
+### MERGE MULTIPLE RASTERS INTO A SINGLE RASTER ###
+###################################################
+
+### Python Rasterio is much slower then gdal cmd ###
+### So no need to use  E:\DWER_LIDAR\Tools\rasterSubsets_to_merge.py
+### Thus the following lines cmds are not Python but gdal cmds but the filing convension worked...
+
+# Review:
+# https://gdal.org/en/latest/programs/index.html#programs
+
+### Processing ###
+##################
+
+### Warning this example of processing took DAYS!!! For the whole of Perth and Denmark...
+
+1)
+open OSGeo4W shell (search for "OSGeo4W" or in list of programme, sub programme of "QGIS"):
+
+
+E:\DWER_LIDAR\Working\Ashburton_LiDAR_1m_DSM_GDA2020\raster
+
+#cd /d E:\DWER_LIDAR\Working\Shire_of_Denmark_Feb_2023_1m_LiDAR_DEM_GDA2020\raster
+#cd /d E:\DWER_LIDAR\Working\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020\raster
+#cd /d E:\DWER_LIDAR\Working\Town_of_Bassendean_1m_DEM_LiDAR_GDA2020\rasterE:\DWER_LIDAR\Working\Perth_1m_DEM_GDA2020\raster
+#cd /d E:\DWER_LIDAR\Working\Town_of_Bassendean_1m_DEM_LiDAR_GDA2020\raster
+cd /d E:\DWER_LIDAR\Working\Burrup_Lidar_30Oct2018_50cm_DSM_Final_GDA2020\raster
+2)
+dir *_??.tif /b /s >rst_lst.txt # these wildcards ensure that a rerun of the cmd does nto include a previously created file tif product
+or if more that one set of rasters (different crs)
+dir *GDA94*.tif /b >rst_lst.txt
+
+3)
+# The naming convension of the vrt file should follow that of the partitioned tif file names
+gdalbuildvrt -overwrite -resolution highest -r nearest -input_file_list "E:\DWER_LIDAR\Working\Ashburton_LiDAR_1m_DSM_GDA2020\raster\rst_lst.txt" -overwrite "E:\DWER_LIDAR\Working\Ashburton_LiDAR_1m_DSM_GDA2020\raster\Ashburton_LiDAR_1m_DSM_GDA94_MGA50.vrt"
+#gdalbuildvrt -overwrite -resolution highest -r nearest -input_file_list "E:\DWER_LIDAR\Working\Shire_of_Denmark_Feb_2023_1m_LiDAR_DEM_GDA2020\raster\rst_lst.txt" -overwrite "E:\DWER_LIDAR\Working\Shire_of_Denmark_Feb_2023_1m_LiDAR_DEM_GDA2020\Shire_of_Denmark_Feb_2023_1m_LiDAR_DEM_GDA1994_MGA50.vrt"
+#gdalbuildvrt -overwrite -resolution highest -r nearest -input_file_list "E:\DWER_LIDAR\Working\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020\raster\rst_lst.txt" -overwrite "E:\DWER_LIDAR\Working\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020\raster\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020_MGA51.vrt"
+#gdalbuildvrt -overwrite -resolution highest -r nearest -input_file_list "E:\DWER_LIDAR\Working\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020\raster\rst_lst.txt" -overwrite "E:\DWER_LIDAR\Working\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020\raster\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA1994_MGA51.vrt"
+#gdalbuildvrt -overwrite -resolution highest -r nearest -input_file_list "E:\DWER_LIDAR\Working\Town_of_Bassendean_1m_DEM_LiDAR_GDA2020\raster\rst_lst.txt" -overwrite "E:\DWER_LIDAR\Working\Town_of_Bassendean_1m_DEM_LiDAR_GDA2020\raster\Town_of_Bassendean_1m_DEM_LiDAR_GDA94_MGA50.vrt"
+#gdalbuildvrt -overwrite -resolution highest -r nearest -input_file_list "E:\DWER_LIDAR\Working\South_Metro_Jan_2023_1m_DEM_GDA2020\raster\rst_lst.txt" -overwrite "E:\DWER_LIDAR\Working\South_Metro_Jan_2023_1m_DEM_GDA2020\raster\South_Metro_Jan_2023_1m_DEM_GDA94_MGA50.vrt"
+#gdalbuildvrt -overwrite -resolution highest -r nearest -input_file_list "E:\DWER_LIDAR\Working\Irwin_River_50cm_DEM_Apr_2023_GDA2020\raster\rst_lst.txt" -overwrite "E:\DWER_LIDAR\Working\Irwin_River_50cm_DEM_Apr_2023_GDA2020\raster\Irwin_River_50cm_DEM_Apr_2023_GDA94_MGA50.vrt"
+#gdalbuildvrt -overwrite -resolution highest -r nearest -input_file_list "E:\DWER_LIDAR\Working\Burrup_Lidar_30Oct2018_50cm_DSM_Final_GDA2020\raster\rst_lst.txt" -overwrite "E:\DWER_LIDAR\Working\Burrup_Lidar_30Oct2018_50cm_DSM_Final_GDA2020\raster\Burrup_Lidar_30Oct2018_50cm_DSM_Final_GDA94_MGA50.vrt"
+gdalbuildvrt -overwrite -resolution highest -r nearest -input_file_list "E:\DWER_LIDAR\Working\Oakajee_LiDAR_Jan_2021_1m_DEM_GDA2020\raster\rst_lst.txt" -overwrite "E:\DWER_LIDAR\Working\Oakajee_LiDAR_Jan_2021_1m_DEM_GDA2020\raster\Oakajee_LiDAR_Jan_2021_1m_DEM_GDA94_MGA50.vrt"
+
+
+
+
+4)
+# The naming convension of the merged tif file should follow that of the vrt file name
+# To process quicker use: --config GDAL_CACHEMAX=2048000000 GDAL_NUM_THREADS="ALL_CPUS"
+
+# -co "TILED=NO" 
+gdal_translate --config GDAL_CACHEMAX=2048000000 GDAL_NUM_THREADS="ALL_CPUS" -of GTiff -co compress=lzw -co predictor=2 -co bigtiff=yes -co NUM_THREADS=ALL_CPUS "E:\DWER_LIDAR\Working\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020\raster\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020_MGA51.vrt" "E:\DWER_LIDAR\Working\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020\raster\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020_MGA51.tif"
+gdal_translate --config GDAL_CACHEMAX=2048000000 GDAL_NUM_THREADS="ALL_CPUS" -of GTiff -co compress=lzw -co predictor=2 -co bigtiff=yes -co NUM_THREADS=ALL_CPUS "E:\DWER_LIDAR\Working\Town_of_Bassendean_1m_DEM_LiDAR_GDA2020\raster\Town_of_Bassendean_1m_DEM_LiDAR_GDA94_MGA50.vrt" "E:\DWER_LIDAR\Working\Town_of_Bassendean_1m_DEM_LiDAR_GDA2020\raster\Town_of_Bassendean_1m_DEM_LiDAR_GDA94_MGA50.tif"
+
+# -co "TILED=YES" # By default stripped TIFF files are created. This option can be used to force creation of tiled TIFF files.
+gdal_translate --config GDAL_CACHEMAX=2048000000 GDAL_NUM_THREADS="ALL_CPUS" -of GTiff -co compress=lzw -co predictor=2 -co bigtiff=yes -co NUM_THREADS=ALL_CPUS -co "TILED=YES" "E:\DWER_LIDAR\Working\Ashburton_LiDAR_1m_DSM_GDA2020\raster\Ashburton_LiDAR_1m_DSM_GDA94_MGA50.vrt" "E:\DWER_LIDAR\Working\Ashburton_LiDAR_1m_DSM_GDA2020\raster\Ashburton_LiDAR_1m_DSM_GDA94_MGA50.tif" #  
+gdal_translate --config GDAL_CACHEMAX=2048000000 GDAL_NUM_THREADS="ALL_CPUS" -of GTiff -co compress=lzw -co predictor=2 -co bigtiff=yes -co NUM_THREADS=ALL_CPUS -co "TILED=YES" "E:\DWER_LIDAR\Working\Town_of_Bassendean_1m_DEM_LiDAR_GDA2020\raster\Town_of_Bassendean_1m_DEM_LiDAR_GDA94_MGA50.vrt" "E:\DWER_LIDAR\Working\Town_of_Bassendean_1m_DEM_LiDAR_GDA2020\raster\Town_of_Bassendean_1m_DEM_LiDAR_GDA94_MGA50_tiled.tif" #  few secs  to minuets
+gdal_translate --config GDAL_CACHEMAX=2048000000 GDAL_NUM_THREADS="ALL_CPUS" -of GTiff -co compress=lzw -co predictor=2 -co bigtiff=yes -co NUM_THREADS=ALL_CPUS -co "TILED=YES" "E:\DWER_LIDAR\Working\Shire_of_Denmark_Feb_2023_1m_LiDAR_DEM_GDA2020\raster\Shire_of_Denmark_Feb_2023_1m_LiDAR_DEM_GDA1994_MGA50.vrt" "E:\DWER_LIDAR\Working\Shire_of_Denmark_Feb_2023_1m_LiDAR_DEM_GDA2020\raster\Shire_of_Denmark_Feb_2023_1m_LiDAR_DEM_GDA1994_MGA50.tif" # start 29/08/2024 14:11 
+gdal_translate --config GDAL_CACHEMAX=2048000000 GDAL_NUM_THREADS="ALL_CPUS" -of GTiff -co compress=lzw -co predictor=2 -co bigtiff=yes -co NUM_THREADS=ALL_CPUS -co "TILED=YES" "E:\DWER_LIDAR\Working\Perth_1m_DEM_GDA2020\raster\Perth_1m_DEM_GDA94_MGA50.vrt" "E:\DWER_LIDAR\Working\Perth_1m_DEM_GDA2020\raster\Perth_1m_DEM_GDA94_MGA50.tif" # start 02/09/2024 14:25
+gdal_translate --config GDAL_CACHEMAX=2048000000 GDAL_NUM_THREADS="ALL_CPUS" -of GTiff -co compress=lzw -co predictor=2 -co bigtiff=yes -co NUM_THREADS=ALL_CPUS -co "TILED=YES" "E:\DWER_LIDAR\Working\South_Metro_Jan_2023_1m_DEM_GDA2020\raster\South_Metro_Jan_2023_1m_DEM_GDA94_MGA50.vrt" "E:\DWER_LIDAR\Working\South_Metro_Jan_2023_1m_DEM_GDA2020\raster\South_Metro_Jan_2023_1m_DEM_GDA94_MGA50.tif" # start 04/09/2024 09:07
+gdal_translate --config GDAL_CACHEMAX=2048000000 GDAL_NUM_THREADS="ALL_CPUS" -of GTiff -co compress=lzw -co predictor=2 -co bigtiff=yes -co NUM_THREADS=ALL_CPUS -co "TILED=YES" "E:\DWER_LIDAR\Working\Irwin_River_50cm_DEM_Apr_2023_GDA2020\raster\Irwin_River_50cm_DEM_Apr_2023_GDA94_MGA50.vrt" "E:\DWER_LIDAR\Working\Irwin_River_50cm_DEM_Apr_2023_GDA2020\raster\Irwin_River_50cm_DEM_Apr_2023_GDA94_MGA50.tif" # start 06/09/2024 09:01 finish 09:02
+gdal_translate --config GDAL_CACHEMAX=2048000000 GDAL_NUM_THREADS="ALL_CPUS" -of GTiff -co compress=lzw -co predictor=2 -co bigtiff=yes -co NUM_THREADS=ALL_CPUS -co "TILED=YES" "E:\DWER_LIDAR\Working\Burrup_Lidar_30Oct2018_50cm_DSM_Final_GDA2020\raster\Burrup_Lidar_30Oct2018_50cm_DSM_Final_GDA94_MGA50.vrt" "E:\DWER_LIDAR\Working\Burrup_Lidar_30Oct2018_50cm_DSM_Final_GDA2020\raster\Burrup_Lidar_30Oct2018_50cm_DSM_Final_GDA94_MGA50.tif"
+
+
+
+
+# Indication of the final products:
+
+5) Quick way to get the stats updated before loading into a GIS.
+gdalinfo -stats "E:\DWER_LIDAR\Working\Perth_1m_DEM_GDA2020\raster\Perth_1m_DEM_GDA94_MGA50.tif"
+gdalinfo -stats "E:\DWER_LIDAR\Working\Town_of_Bassendean_1m_DEM_LiDAR_GDA2020\raster\Town_of_Bassendean_1m_DEM_LiDAR_GDA94_MGA50.tif"
+gdalinfo -stats "E:\DWER_LIDAR\Working\Shire_of_Denmark_Feb_2023_1m_LiDAR_DEM_GDA2020\Shire_of_Denmark_Feb_2023_1m_LiDAR_DEM_GDA1994_MGA50.tif"
+gdalinfo -stats "E:\DWER_LIDAR\Working\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020\raster\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020_MGA51.tif"
+gdalinfo -stats "E:\DWER_LIDAR\Working\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA2020\raster\Elverdton_Mine_Oct_2022_1m_LiDAR_DEM_GDA1994_MGA51.tif"
+gdalinfo -stats "E:\DWER_LIDAR\Working\South_Metro_Jan_2023_1m_DEM_GDA2020\raster\South_Metro_Jan_2023_1m_DEM_GDA94_MGA50.tif"
+gdalinfo -stats "E:\DWER_LIDAR\Working\Burrup_Lidar_30Oct2018_50cm_DSM_Final_GDA2020\raster\Burrup_Lidar_30Oct2018_50cm_DSM_Final_GDA94_MGA50.tif"
+gdalinfo -stats "E:\DWER_LIDAR\Working\Ashburton_LiDAR_1m_DSM_GDA2020\raster\Ashburton_LiDAR_1m_DSM_GDA94_MGA50.tif"
+
+
+Fin!/Telos!
+
+
+# An alternative to step (4) gdal_translate
+# Is the Python API version E:\DWER_LIDAR\Tools\Function_3_Merge_Raster_Subsets_gdal_test.py
+# This Python script need finalising, it works not not sure that the -co and --coinfig options are working correctly
+
+# REVIEW the use of gdal_translate -co "TILED=YES" ###
+# https://svn.osgeo.org/gdal/tags/1.6.3/gdal/frmts/gtiff/frmt_gtiff.html
+# https://gis.stackexchange.com/questions/27160/geotiff-format-tile-and-overview-confusion
+# "For low-resolution to medium-resolution images, the standard TIFF method of breaking the image into strips is adequate. However high-resolution images can be accessed more efficiently — and compression tends to work better — if the image is broken into roughly square tiles instead of horizontally-wide but vertically narrow strips."
+
+
