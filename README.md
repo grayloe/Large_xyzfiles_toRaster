@@ -1,5 +1,7 @@
-The Department of Water and Environtal Regulation (DWER), provided a number of LiDAR derived DEM files to Dept. of Biodiversity, Conservation and Attrications (DBCA).
-Due to the size of this asc files (200968_Pilbara_Rivers_Area3_DEM_MGA50_B.asc 139,408,422 KB), and in a x,y,z column text format, they were not readily accecssable to the DBCA (dept).
+The Department of Water and Environtal Regulation (DWER), provided a number of LiDAR derived DEM files 
+to Dept. of Biodiversity, Conservation and Attrications (DBCA).
+Due to the size of this asc files (200968_Pilbara_Rivers_Area3_DEM_MGA50_B.asc 139,408,422 KB), 
+and in a x,y,z column text format, they were not readily accecssable to the DBCA (dept).
 
 Graham Loewenthal produces a series of scripts that would process the asc files into rasters.
 
